@@ -13,11 +13,20 @@ exports.criartarefas = (req, res) => {
 
 
         exports.listarTarefas = (req, res) => {
-            conexao.query ('SELECT*FROM tarefas', (err, results) => {
-                if (err) return res.status(500).send('Erro ao buscar tarefas');
-                res.status(200).send(results);
+            conexao.query("SELECT * FROM tarefas", (err, results) => {
+              if (err) return res.status(500).send("Erro ao buscar tarefas");
+              res.status(200).send(results);
             });
-        };
+          };
+          
+          exports.filtrarTarefas = (req, res) => {
+            const { status } = req.query; 
+          
+            conexao.query("SELECT * FROM tarefas WHERE status = ?", [status], (err, results) => {
+              if (err) return res.status(500).send("Erro ao buscar tarefas");
+              res.status(200).send(results);
+            });
+          };
 
 
         exports.atualizarTarefa = (req,res) => {
